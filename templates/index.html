@@ -66,8 +66,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="d:\SIC CODES\logo.png" alt="Logo">
+                            <a class="navbar-brand" href="{{ url_for('landing_page') }}">
+                                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="toggler-icon"></span>
@@ -116,13 +116,13 @@
                             <h3 class="header-title wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.2s"><span>You're Using</span> EzGST for GST Calculations</h3>
                             <p class="text wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.6s">The GST Calculator web app is a user-friendly online tool designed to simplify the process of calculating Goods and Services Tax (GST) for businesses and individuals. This web-based application provides an easy-to-use interface for users to quickly and accurately calculate GST on various transactions.</p>
                             <ul class="d-flex">
-                                <li><a href="https://rebrand.ly/appland-ud" rel="nofollow" class="main-btn wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.8s">Get Started Now</a></li>
+                                <li><a href="{{ url_for('bill_generator_page') }}" class="main-btn wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.8s">Get Started Now</a></li>
                             </ul>
                         </div> <!-- header hero content -->
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-6 col-10">
                         <div class="header-image">
-                            <img src="assets/images/header-app.png" alt="app" class="image wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
+                            <img src="{{ url_for('static', filename='assets/images/header-app.png') }}" alt="app" class="image wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
                             <div class="image-shape wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.8s"></div>
                                <!-- <img src="assets/images/image-shape.png" alt="shape"> -->
                         
@@ -132,7 +132,7 @@
             </div> <!-- container -->
             <div class="header-shape-1"></div> <!-- header shape -->
             <div class="header-shape-2">
-                <img src="assets/images/header-shape-2.svg" alt="shape">
+                <img src="{{ url_for('static', filename='assets/images/header-shape-2.svg') }}" alt="shape">
             </div> <!-- header shape -->
         </div> <!-- header hero -->
     </header>
@@ -158,7 +158,7 @@
                             <i class="fas fa-calculator feature-icon"></i>
                         </div>
                         <div class="services-content">
-                            <h4 class="services-title"><a href="#">GST Calculator</a></h4>
+                            <h4 class="services-title"><a href="{{ url_for('bill_generator_page') }}">GST Calculator</a></h4>
                             <p class="text">Calculate GST and generate the Bill.</p>
                         </div>
                     </div> <!-- single services -->
@@ -169,7 +169,7 @@
                             <i class="fas fa-qrcode"></i>
                         </div>
                         <div class="services-content">
-                            <h4 class="services-title"><a href="#">Generate QR</a></h4>
+                            <h4 class="services-title"><a href="{{ url_for('generate_qr_page') }}">Generate QR</a></h4>
                             <p class="text">Get the QR of your generated Bill with the GST applied.</p>
                         </div>
                     </div> <!-- single services -->
@@ -180,7 +180,7 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="services-content">
-                            <h4 class="services-title"><a href="#">Stock Data</a></h4>
+                            <h4 class="services-title"><a href="{{ url_for('finance') }}">Stock Data</a></h4>
                             <p class="text">Get the live stock Data about GST.</p>
                         </div>
                     </div> <!-- single services -->
@@ -200,10 +200,10 @@
         </div>
         
             <div class="container" style="display: flex; justify-content: center; gap: 90px;margin-top: 100px;">
-                <button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">Go To Bill Generator</button>
-                <button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">Generate QR For Products</button>
-                <button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">View Live Stock Data</button>
-                <button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">Tax Around The World</button>
+                <a href="{{ url_for('bill_generator_page') }}"><button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">Go To Bill Generator</button></a>
+                <a href="{{ url_for('generate_qr_page') }}"><button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">Generate QR For Products</button></a>
+                <a href="{{ url_for('finance') }}"><button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">View Live Stock Data</button></a>
+                <a href="{{ url_for('gstworld') }}"><button style="gap: 20px; margin-top: 20px; background-color: #00bfff; color: #fff; padding: 15px; border: none; border-radius: 5px; cursor: pointer;">Tax Around The World</button></a>
             </div>
             
          <!-- container -->
@@ -214,11 +214,11 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-6 col-md-9">
                     <div class="download-image mt-50 wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                        <img class="image" src="assets/images/download-app.png" alt="download">
+                        <img class="image" src="{{ url_for('static', filename='assets/images/download-app.png') }}" alt="download">
                         
                         <div class="download-shape-1"></div>
                         <div class="download-shape-2">
-                            <img class="svg" src="assets/images/download-shape.svg" alt="shape">
+                            <img class="svg" src="{{ url_for('static', filename='assets/images/download-shape.svg') }}" alt="shape">
                         </div>
                     </div> <!-- download image -->
                 </div>
@@ -231,7 +231,7 @@
                     <!-- Create a container for the QR code -->
 <div class="qr-code-container">
     <!-- Add the QR code image -->
-    <img src="d:\SIC CODES\appland-free-lite\assets\images\QR App.png" alt="QR Code" class="qr-code">
+    <img src="{{ url_for('static', filename='assets/images/QR App.png') }}" alt="QR Code" class="qr-code">
     <!-- Optional: Add a label or description -->
     <p class="qr-code-label">Scan to Download the App</p>
   </div>
@@ -290,7 +290,7 @@
                     </div> <!-- single services -->
                 </div>
 
-                <div class="col-lg-3 col-sm-6"></div>
+                <div class="col-lg-3 col-sm-6">
                     <div class="single-services services-color-1 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.2s">
                         <div class="services-icon d-flex align-items-center justify-content-center">
                             <i class="fas fa-calculator feature-icon"></i>
@@ -301,18 +301,7 @@
                         </div>
                     </div> <!-- single services -->
                 </div>
-
-                <div class="col-lg-3 col-sm-6"></div>
-                    <div class="single-services services-color-1 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                        <div class="services-icon d-flex align-items-center justify-content-center">
-                            <i class="fas fa-calculator feature-icon"></i>
-                        </div>
-                        <div class="services-content">
-                            <h4 class="services-title"><a href="#">More Calculator</a></h4>
-                            <p class="text">We can Add more Calculator in future like<br>Scientific Calculator<br>Income Tax Calculator<br>Financial Calculator</bbr></p>
-                        </div>
-                    </div> <!-- single services -->
-                </div>
+            </div>
         </div>
     </section>
     
@@ -330,7 +319,7 @@
         <div class="footer-shape shape-6"></div>
         <div class="footer-shape shape-7"></div>
         <div class="footer-shape shape-8">
-            <img class="svg" src="assets/images/footer-shape.svg" alt="Shape">
+            <img class="svg" src="{{ url_for('static', filename='assets/images/footer-shape.svg') }}" alt="Shape">
         </div>
     
     <section id="contact">
@@ -339,8 +328,8 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-about mt-50 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                            <a class="logo" href="#" >
-                                <img src="d:\SIC CODES\logo.png" alt="Logo">
+                            <a class="logo" href="{{ url_for('landing_page') }}" >
+                                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
                             </a>
                             <p class="text">Thank you for using this web app.<br>Glad to know that you find this usefull & exciting.<br>Expecting your visit again.<br>Thank You</p>
                             <ul class="social">
@@ -358,10 +347,10 @@
                                     <h4 class="title">Quick Links</h4>
                                 </div>
                                 <ul class="link">
-                                    <li><a class="" href="#">Home</a></li>
-                                    <li><a class="" href="#">GST Calculator</a></li>
-                                    <li><a class="" href="#">About Us</a></li>
-                                    <li><a class="" href="#">Contact Us</a></li>
+                                    <li><a href="{{ url_for('landing_page') }}">Home</a></li>
+                                    <li><a href="{{ url_for('bill_generator_page') }}">GST Calculator</a></li>
+                                    <li><a href="#download">About Us</a></li>
+                                    <li><a href="#contact">Contact Us</a></li>
                                 </ul>
                             </div> <!-- footer link wrapper -->
                             
@@ -370,9 +359,9 @@
                                     <h4 class="title">Legal & Compliance</h4>
                                 </div>
                                 <ul class="link">
-                                    <li><a class="" href="#">FAQ</a></li>
-                                    <li><a class="" href="#">Privacy Policy</a></li>
-                                    <li><a class="" href="#">Terms Of Use</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Terms Of Use</a></li>
                                 </ul>
                             </div> <!-- footer link wrapper -->
                         </div> <!-- footer link -->
@@ -466,24 +455,24 @@
 
 
     <!--====== Jquery js ======-->
-    <script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="assets/js/vendor/modernizr-3.7.1.min.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/vendor/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/vendor/modernizr-3.7.1.min.js') }}"></script>
     
     <!--====== Bootstrap js ======-->
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
     
     
     <!--====== WOW js ======-->
-    <script src="assets/js/wow.min.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/wow.min.js') }}"></script>
     
     
     <!--====== Scrolling Nav js ======-->
-    <script src="assets/js/jquery.easing.min.js"></script>
-    <script src="assets/js/scrolling-nav.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/scrolling-nav.js') }}"></script>
     
     <!--====== Main js ======-->
-    <script src="assets/js/main.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
     
 </body>
 

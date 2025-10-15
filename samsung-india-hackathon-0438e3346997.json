@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "samsung-india-hackathon",
+  "private_key_id": "1c97b464020269739f4e2310c19f71c2abb131e5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC0OWZnV03YInjh\nQinwEtif8e+2ewgwLlVS2djnblaAtCPpiiLIxSAHvDYRIvVkZ0UcEfR030PqRq82\nu8u6cKM8qj96OqNkOEsjpODDTTSvPC/VaXNpNHlOGKO2/5Q/3JLVlaVFuXCjMAp6\nDUvV2gQZukhQJScuX73GUbDN5iOzQXgS0JKyN3EsazSBylkz/se2UQBaBmGK5i0C\nrzY/K2QlleBMA4O8/g1hqmJJ9viLiOtS2D/I4k5F8DIiKSgJPau1HaavJ0liT1fo\nIIbYpthIRR6+fTkrNXCCiIlZFTgruMubAYGywceeGe4e0OWOKh9BXnZj7oGI3USE\n7RVRcxHXAgMBAAECggEAMmpAMDZm60gxYmocyzCqcou+T+C42KmNasDQAWWHQzeh\nOCpRMrKaFC/dPAv4c17EIWcQaEUwfW/Kgdgk1IG/2C+T1EBlBpsMwerUiS2myEJg\n6yU1iL+KE4OnAIEcWoT8ek0DT67hSHUe6SehCDCVpxDKO8k43asgrkKZ3+86G2GD\n2UgkFj8zudqsqGiMuEt8TNl7LOvWwgqKqer9gYHqk7VvP47srvD2kNnfvxY8Sr2h\nQqe1yemmamFg61mm1FFZ8mx9L9luxn5nw4/HLGPs7nQEqewFRnOfpCbfc+BofM+k\ne4C0y+EKXEAAs2P2KzRe9HlOE6t26qd27baOQ6ZQiQKBgQDdBH/FkBbXS7ABfRIf\ncWKpRawU7t/k0gqob4PJUsE2uhRvRZT1C3hdTJH7bAw6ADf9+tOQAGSetrU0kUW3\n4P+DAVzt1Io//AXzgHE2d5MEev4pdsbIA+ktwD8af39JbknqOJqZCluO+6EMHDco\n6B8nn+l3+uCXkQZHbqLObUjARQKBgQDQv/p1GXrLUr2mWFUfQkdgsanDxPrXLo4Q\ndW5uqXrc84cY9HjNs0zyCVTiktHFhsdpJMkDQ7rpsNSWzzqulxXs4k1mVivWMetp\nYGqA7ebjFkf2PpWuEkUKRzOyXm0VRvnC23deOcBwRtYJYgGtIeUfeMpgEvzCElaD\nP+jkn9+xawKBgEc38ew5eAK8MuTn5nUXVlFxT/gW2TKktCZ+eJrg/b2izH7mjw8/\nOPPnforj0DTIaUKAFrgqSEIUYeOkhDCyYeNXBxjkCgCAN3K1isWgVlF1SH0X9wnw\nqKzDbBIfz2ZcEZlV0AtMmSBD2StL1EJsOc3M67BruP9eDgXqkq+t62l5AoGAJzDj\nxLhT5XhTQreyw3ueCvlP9gE1VtDWuyBQ61XGS1UtN/It+/B9sbMuzJrj50G2jnbp\nhkNhBB6+ytF9Iuoao66Y+W2ULVKR7+a6GBqSDnBQclqtn1CuxY84lXRE5om8umiZ\nsIcHKg0iggB0cBy893umAwONkKIAvANzpfid9qECgYAG06UyvcLZueDKwuvsWkHt\nUEeK24PoCP4xnxiiar5UQl6W7rppEWbtbJDw73yaMJeSDWkvDoezsFDpOQfk4GcR\n+PozFNv8ptQtsS/xiLDFcPs+lqQxKVQHc341s02tz7OO6LDFNpeyud1SzMfKtVLa\nzWR5AY/LV6hqBzeZa3EJlg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "fetchgst@samsung-india-hackathon.iam.gserviceaccount.com",
+  "client_id": "103012969047027374355",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fetchgst%40samsung-india-hackathon.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

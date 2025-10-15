@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EzGST - Simplify Your Billing and GST Calculations</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+            text-align: center;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            text-align: center;
+            padding: 5rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .buttons {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: #fff;
+            color: #333;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 0 0.5rem;
+            transition: background 0.3s, color 0.3s;
+            font-weight: bold;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            background: #333;
+            color: #fff;
+            border-color: #fff;
+        }
+
+        /* ABOUT SECTION */
+        .about, .feature {
+            padding: 4rem 1rem;
+            text-align: center;
+            background: #fff;
+            margin: 2rem 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .about:hover, .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .about h2, .feature h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .about p, .feature p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #555;
+        }
+
+        /* ICON STYLING */
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2575fc;
+        }
+
+        /* FLEX CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .about, .feature {
+                flex-basis: 100%;
+                margin: 1rem 0;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* FOOTER STYLING */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <h2>Simplify Your Billing and GST Calculations</h2>
+            <p>Generate bills, create QR codes, track live stocks, and learn about taxes around the world with EzGST. Our platform is designed to simplify your billing and GST calculation needs, providing you with accurate and reliable results.</p>
+            <div class="buttons">
+                <a href="/bill-generator" class="btn">Start Billing</a>
+                <a href="/generate_qr" class="btn">Generate QR</a>
+                <a href="/finance" class="btn">Live Stocks</a>
+                <a href="/gstworld" class="btn">Tax Around the World</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="container">
+        <section id="about" class="about">
+            <i class="icon fa fa-info-circle"></i>
+            <h2>About EzGST</h2>
+            <p>EzGST is your one-stop solution for all billing and GST calculation needs. Our custom API fetches data from the official GST portal to ensure accurate tax calculations. Whether you need to generate bills, create QR codes for products, track live stocks, or learn about taxes around the world, EzGST has got you covered. Our platform is designed to be user-friendly, efficient, and reliable, making it the perfect choice for businesses of all sizes.</p>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <div class="feature-container">
+            <section id="bill-generator" class="feature">
+                <i class="icon fa fa-file-invoice"></i>
+                <h2>Bill Generator</h2>
+                <p>Generate detailed bills with accurate GST calculations effortlessly with EzGST. Our tool allows you to quickly create professional bills, scan QR codes for seamless product entry, pay via UPI, and export bills in various formats. Save time, reduce errors, and streamline your billing process with ease.</p>
+            </section>
+
+            <section id="qr-code-generator" class="feature">
+                <i class="icon fa fa-qrcode"></i>
+                <h2>QR Code Generator</h2>
+                <p>Create QR codes for your products to make billing seamless and efficient. Our QR code generator tool allows you to create custom QR codes that can be easily scanned, making it easy to track inventory and manage your products. Streamline your process with EzGST.</p>
+            </section>
+
+            <section id="live-stocks" class="feature">
+                <i class="icon fa fa-boxes"></i>
+                <h2>Live Stocks</h2>
+                <p>Track your live stocks in real-time and manage your inventory effectively. Monitor inventory levels, track product movement, and receive alerts when stock is low. Optimize your inventory management with EzGST.</p>
+            </section>
+
+            <section id="tax-about-world" class="feature">
+                <i class="icon fa fa-globe"></i>
+                <h2>Tax Around the World</h2>
+                <p>Learn about tax systems and regulations globally. Our platform offers insights into tax laws and regulations from various countries, helping you navigate international taxation with ease.</p>
+            </section>
+
+            <!-- NEW TOOLS CARD -->
+            <section id="tools" class="feature">
+                <i class="icon fa fa-tools"></i>
+                <h2>Features</h2>
+                <p>EzGST offers essential tools to enhance your billing experience, including:</p>
+                <ul>
+                    <li><i class="fa fa-credit-card"></i> UPI Integration</li>
+                    <li><i class="fa fa-file-export"></i> Export Bills</li>
+                    <li><i class="fa fa-plus"></i> Add Multiple Items</li>
+                    <li><i class="fa fa-print"></i> Print Bills Easily</li>
+                </ul>
+            </section>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>EzGST .  <a href="#">Created Under SIC</a> Sept2024</p>
+        </div>
+    </footer>
+</body>
+</html>

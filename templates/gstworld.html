@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global GST and VAT Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #map {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            font-size: 16px;
+            z-index: 1000;
+        }
+
+        #country-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        #tax-info {
+            font-size: 1rem;
+        }
+
+        .leaflet-container {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <div id="info-panel">
+        <h2 id="country-name">Click on a country</h2>
+        <p id="tax-info">Tax information will appear here.</p>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://unpkg.com/leaflet-omnivore/leaflet-omnivore.min.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([20, 0], 2);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 10,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Define VAT/GST information for each country
+        var countryTaxes = {
+    "India": {
+        "gst_info": "India has a GST system with multiple tax rates ranging from 5% to 28% based on the type of goods and services. Essential items like food attract lower rates, while luxury goods attract higher rates."
+    },
+    "Germany": {
+        "gst_info": "Germany follows the EU VAT system, with a standard rate of 19% and a reduced rate of 7% for essential goods like food, books, and medicines."
+    },
+    "France": {
+        "gst_info": "France applies a VAT at 20%, with reduced rates of 10%, 5.5%, and 2.1% for certain goods and services, such as food, books, and medical supplies."
+    },
+    "United States": {
+        "gst_info": "The U.S. does not have a federal VAT system. Instead, individual states levy sales taxes, which vary widely. Some states have no sales tax, while others have rates up to 10%."
+    },
+    "Canada": {
+        "gst_info": "Canada has a federal GST of 5%, with additional provincial sales taxes (PST). Some provinces combine these into a harmonized sales tax (HST), ranging from 13% to 15%."
+    },
+    "Australia": {
+        "gst_info": "Australia imposes a GST of 10% on most goods and services. Some items like fresh food, medical services, and education are GST-free."
+    },
+    "Brazil": {
+        "gst_info": "Brazil has a complex tax system with multiple layers, including federal, state, and municipal taxes. The VAT-like tax (ICMS) varies between 17% and 25% depending on the state and the product."
+    },
+    "China": {
+        "gst_info": "China's VAT rates range from 6% to 13%, with the standard rate being 13%. Lower rates apply to specific industries, like agriculture and utilities."
+    },
+    "Japan": {
+        "gst_info": "Japan levies a consumption tax of 10% on most goods and services, with a reduced rate of 8% on food and non-alcoholic beverages."
+    },
+    "United Kingdom": {
+        "gst_info": "The UK has a VAT of 20%, with reduced rates of 5% for certain items such as home energy and children's car seats, and a zero rate for food and children's clothing."
+    },
+    "Mexico": {
+        "gst_info": "Mexico applies a VAT of 16% on most goods and services. There is a 0% rate for essential items like food and medicines."
+    },
+    "Russia": {
+        "gst_info": "Russia has a VAT rate of 20%, with a reduced rate of 10% for essential goods such as food and medicines."
+    },
+    "South Africa": {
+        "gst_info": "South Africa applies a VAT of 15% on most goods and services, with exemptions for certain items such as basic foodstuffs."
+    },
+    "Saudi Arabia": {
+        "gst_info": "Saudi Arabia introduced VAT in 2018 with a standard rate of 5%, which was later increased to 15% in 2020 as part of economic reforms."
+    },
+    "United Arab Emirates": {
+        "gst_info": "The UAE implemented a 5% VAT on most goods and services in 2018 as part of a GCC-wide agreement to diversify revenue streams."
+    },
+    "Argentina": {
+        "gst_info": "Argentina applies a VAT of 21%, with reduced rates of 10.5% for certain goods and services like basic foods and medical equipment."
+    },
+    "Chile": {
+        "gst_info": "Chile has a VAT of 19% on most goods and services. Some exemptions apply to essential items like healthcare and education."
+    },
+    "Colombia": {
+        "gst_info": "Colombia applies a VAT of 19%, with some essential goods and services, such as basic foodstuffs and public transportation, exempt from the tax."
+    },
+    "Egypt": {
+        "gst_info": "Egypt levies a VAT of 14%, with exemptions for certain essential goods and services like basic foods and education."
+    },
+    "Nigeria": {
+        "gst_info": "Nigeria has a VAT of 7.5%, which was increased from 5% in 2020. Some essential items like food, medical products, and education services are VAT-exempt."
+    },
+    "Kenya": {
+        "gst_info": "Kenya applies a VAT of 16%, with reduced rates for certain essential goods such as foodstuffs and medicine, as well as exemptions for public transportation."
+    },
+    "Ethiopia": {
+        "gst_info": "Ethiopia has a VAT of 15% on most goods and services, with exemptions for essential items such as food, health services, and education."
+    },
+    "Morocco": {
+        "gst_info": "Morocco levies a VAT of 20%, with reduced rates of 7%, 10%, and 14% for various goods and services like food, utilities, and transportation."
+    },
+    "Turkey": {
+        "gst_info": "Turkey applies a VAT of 18%, with reduced rates of 8% and 1% for items like food, medicines, and books."
+    },
+    "Vietnam": {
+        "gst_info": "Vietnam has a VAT of 10%, with a reduced rate of 5% for essential items such as healthcare and education."
+    },
+    "Thailand": {
+        "gst_info": "Thailand has a VAT rate of 7%, with exemptions for basic necessities like healthcare, education, and public transportation."
+    },
+    "South Korea": {
+        "gst_info": "South Korea applies a VAT of 10% on most goods and services. Certain goods, such as basic food and agriculture-related items, are VAT-exempt."
+    },
+    "Indonesia": {
+        "gst_info": "Indonesia levies a VAT of 11% on most goods and services, with exemptions for basic goods like food and education services."
+    },
+    "Malaysia": {
+        "gst_info": "Malaysia previously had a GST system but switched back to a Sales and Service Tax (SST) of 6% in 2018. The SST applies to specific goods and services."
+    },
+    "Singapore": {
+        "gst_info": "Singapore levies a GST of 8% on most goods and services, with exemptions for financial services and residential property. The GST is set to increase to 9% by 2024."
+    },
+    "New Zealand": {
+        "gst_info": "New Zealand applies a GST of 15% on most goods and services, including imports. There are few exemptions, with some for financial services and residential rent."
+    },
+    "Bangladesh": {
+        "gst_info": "Bangladesh has a VAT system with a standard rate of 15%, though various reduced rates and exemptions apply to sectors such as agriculture and small businesses."
+    },
+    "Pakistan": {
+        "gst_info": "Pakistan levies a GST of 17% on most goods and services, with reduced rates for certain essential goods like food, medicines, and energy."
+    },
+    "Sri Lanka": {
+        "gst_info": "Sri Lanka applies a VAT of 8%, which is charged on most goods and services, with exemptions for essential goods like food and medicine."
+    },
+    "Philippines": {
+        "gst_info": "The Philippines imposes a VAT of 12% on most goods and services. Certain items like healthcare and educational services are exempt from VAT."
+    },
+    "Israel": {
+        "gst_info": "Israel applies a VAT of 17% on most goods and services, with reduced rates for items like tourism and residential rent."
+    },
+    "Switzerland": {
+        "gst_info": "Switzerland has a VAT system with a standard rate of 7.7%. There are reduced rates of 3.7% for hotels and 2.5% for essential goods like food and medicine."
+    },
+    "Norway": {
+        "gst_info": "Norway levies a VAT of 25%, with reduced rates of 15% for food and 12% for passenger transport and hotel stays."
+    },
+    "Sweden": {
+        "gst_info": "Sweden applies a VAT of 25%, with reduced rates of 12% for food and 6% for books, newspapers, and cultural services."
+    },
+    "Denmark": {
+        "gst_info": "Denmark has a VAT of 25% on most goods and services, with very few exemptions or reduced rates."
+    },
+    "Finland": {
+        "gst_info": "Finland applies a VAT of 24%, with reduced rates of 14% for food and 10% for items such as books and pharmaceuticals."
+    },
+    "Italy": {
+        "gst_info": "Italy has a VAT system with a standard rate of 22%, and reduced rates of 10%, 5%, and 4% for specific goods and services like food, healthcare, and transport."
+    },
+    "Spain": {
+        "gst_info": "Spain levies a VAT of 21%, with reduced rates of 10% for items like food and transportation, and 4% for essentials like bread and books."
+    },
+    "Portugal": {
+        "gst_info": "Portugal applies a VAT of 23%, with reduced rates of 13% and 6% for items like food, healthcare, and education services."
+    }
+    // Add more countries as needed
+};
+
+
+        // Load GeoJSON data for countries
+        fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json')
+            .then(response => response.json())
+            .then(data => {
+                // Add GeoJSON layer to the map
+                L.geoJson(data, {
+                    onEachFeature: function (feature, layer) {
+                        layer.on('click', function () {
+                            var country = feature.properties.name;
+                            if (countryTaxes[country]) {
+                                document.getElementById('country-name').textContent = country;
+                                document.getElementById('tax-info').textContent = countryTaxes[country].gst_info;
+                            } else {
+                                document.getElementById('country-name').textContent = country;
+                                document.getElementById('tax-info').textContent = "No GST/VAT information available for this country.";
+                            }
+                        });
+                    },
+                    style: function () {
+                        return {
+                            color: 'blue',
+                            weight: 1,
+                            fillOpacity: 0.2
+                        };
+                    }
+                }).addTo(map);
+            });
+
+    </script>
+</body>
+</html>

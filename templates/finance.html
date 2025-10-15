@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stock Data - Global Stocks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .stock-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+        .stock-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .stock-price {
+            font-size: 32px;
+            color: #2c3e50;
+        }
+        .stock-detail {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        .price-change {
+            font-size: 32px;
+        }
+        .green {
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Global Stock Data</h1>
+    <div class="container" id="stock-container">
+        <!-- Stock Cards will be populated here -->
+    </div>
+
+    <script>
+        async function fetchStockData() {
+            const response = await fetch('/get_stock_data');
+            const stockData = await response.json();
+
+            const stockContainer = document.getElementById('stock-container');
+            stockContainer.innerHTML = '';  // Clear the container
+
+            for (const stock in stockData) {
+                const stockInfo = stockData[stock];
+                const stockCard = document.createElement('div');
+                stockCard.className = 'stock-card';
+                
+                if (stockInfo.error) {
+                    stockCard.innerHTML = `
+                        <div class="stock-name">${stock}</div>
+                        <div class="stock-price">N/A</div>
+                        <div class="stock-detail">${stockInfo.error}</div>
+                    `;
+                } else {
+                    stockCard.innerHTML = `
+                        <div class="stock-name">${stock}</div>
+                        <div class="stock-price">$${stockInfo.current_price}</div>
+                        <div class="stock-detail">High: $${stockInfo.high_price}</div>
+                        <div class="stock-detail">Low: $${stockInfo.low_price}</div>
+                        <div class="stock-detail">Prev. Close: $${stockInfo.previous_close}</div>
+                        <div class="price-change ${stockInfo.change_color}">
+                            ${stockInfo.current_price > stockInfo.previous_close ? '▲' : '▼'}
+                        </div>
+                    `;
+                }
+
+                stockContainer.appendChild(stockCard);
+            }
+        }
+
+        fetchStockData();  // Fetch the stock data when the page loads
+
+        // Optionally, you can refresh the stock data every 30 seconds
+        setInterval(fetchStockData, 30000); 
+    </script>
+</body>
+</html>

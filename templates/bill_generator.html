@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="{{ url_for('static', filename='html5-qrcode.min.js') }}"></script>
+    
+
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            position: relative;
+            min-height: 100vh;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+        .result {
+            margin-top: 20px;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ffffff;
+        }
+        .dropdown-item {
+            cursor: pointer;
+        }
+        #print-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            display: none;
+        }
+        #pay-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 80px;
+            display: none;
+        }
+        .qr-code-wrapper {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        margin-top: 20px; /* Adjust margin as needed */
+        
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Bill Generator</h1>
+        <form id="bill-form">
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="mb-3">
+                <label for="heading" class="form-label">GST Heading (Description)</label>
+                <input type="text" class="form-control" id="heading" name="heading" required>
+                <div id="gst-suggestions" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
+            </div>
+            <div class="mb-3">
+                <input type="checkbox" id="include-igst" name="include-igst">
+                <label for="include-igst">Inter-state supply</label>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addItem()">Add Item</button>
+            <button type="button" class="btn btn-primary" id="scan-qr-btn" onclick="startQrScanner()">Scan QR</button>
+        </form>
+        <div id="qr-reader" style="width: 400px; margin-top: 20px; display: none;"></div>
+        <div id="result" class="result"></div>
+        <div class="qr-code-wrapper">
+            <div id="qrCodeContainer" style="text-align: center;"></div>
+            <p id="qrText" style="display: none;"><strong>Scan the QR to Pay</strong></p>
+        </div>
+        
+    </div>
+
+    <button id="print-btn" class="btn btn-light">Print</button>
+    <button id="pay-btn" class="btn btn-light">Pay Now</button>
+
+    <script>
+        // Fetch GST headings and descriptions from backend
+        let gstData = [];
+        let items = [];
+        let grandTotal = 0;
+
+        fetch('/gst-data')
+            .then(response => response.json())
+            .then(data => {
+                gstData = data;
+            })
+            .catch(error => {
+                console.error('Error fetching GST data:', error);
+            });
+
+        // Handle input for auto-suggest
+        const headingInput = document.getElementById('heading');
+        const suggestionBox = document.getElementById('gst-suggestions');
+
+        headingInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const filteredData = gstData.filter(item => 
+                item.heading.startsWith(query) || item.description.toLowerCase().includes(query)
+            );
+            suggestionBox.innerHTML = '';
+            if (query) {
+                filteredData.slice(0, 5).forEach(item => {
+                    const suggestion = document.createElement('div');
+                    suggestion.classList.add('list-group-item', 'list-group-item-action');
+                    suggestion.innerHTML = `<strong>${item.heading}</strong> - ${item.description}`;
+                    suggestion.addEventListener('click', () => {
+                        headingInput.value = item.heading;
+                        suggestionBox.innerHTML = '';
+                    });
+                    suggestionBox.appendChild(suggestion);
+                });
+            }
+        });
+
+        // Hide the suggestion box when clicked outside
+        document.addEventListener('click', function(event) {
+            if (!headingInput.contains(event.target) && !suggestionBox.contains(event.target)) {
+                suggestionBox.innerHTML = '';
+            }
+        });
+        
+
+        // Add this function to generate and display the QR code
+        function generateQRCode(grandTotal) {
+        const qrCodeContainer = document.getElementById('qrCodeContainer');
+        const qrText = document.getElementById('qrText');
+        qrCodeContainer.innerHTML = ''; // Clear previous QR codes if any
+
+        const upiLink = `upi://pay?pa=8267998788@kotak811&pn=Udit&am=${grandTotal}&cu=INR`;
+
+        // Generate QR code
+        $('#qrCodeContainer').empty(); // Clear previous QR code
+        $('#qrCodeContainer').qrcode({
+            text: upiLink,
+            width: 150,
+            height: 150
+        });
+
+        qrText.style.display = 'block';
+    }
+
+
+        // Attach the event listener to the "Pay Now" button
+        document.getElementById('pay-btn').addEventListener('click', function() {
+            // Call the function to generate QR code with the grand total
+            generateQRCode(grandTotal);
+        });
+
+
+
+        function startQrScanner() {
+    const qrReader = document.getElementById('qr-reader');
+    qrReader.style.display = 'block'; // Show the QR scanner div
+    
+    const html5QrCode = new Html5Qrcode("qr-reader");
+    
+    html5QrCode.start(
+        { facingMode: "environment" }, // Use the back camera for scanning
+        {
+            fps: 24,    // Frame rate for scanning
+            qrbox: 250  // Size of the scanning box
+        },
+        (decodedText, decodedResult) => {
+            // Stop the scanner after decoding a QR code
+            html5QrCode.stop().then(() => {
+                qrReader.style.display = 'none'; // Hide the QR scanner div
+                
+                // Assuming the decoded text is in JSON format like: 
+                // {"Price": "258", "GST Heading": "1701"}
+                try {
+                    const qrData = JSON.parse(decodedText);
+                    
+                    // Set the form fields with the data from the QR code
+                    document.getElementById('price').value = qrData.price;
+                    document.getElementById('heading').value = qrData.heading;
+                    
+                    // Call addItem() to add the item to the list
+                    addItem();
+                } catch (e) {
+                    console.error('Error parsing QR code data: ', e);
+                    alert('Invalid QR code format');
+                }
+            }).catch(err => {
+                console.error('Error stopping QR code scanner: ', err);
+            });
+        },
+        (errorMessage) => {
+            // Optional: Handle scanning errors (not required to display in UI)
+            console.error('Scanning failed: ', errorMessage);
+        }
+    ).catch(err => {
+        console.error('Unable to start the QR code scanner: ', err);
+    });
+}
+
+
+
+        // Add item to the bill
+        function addItem() {
+            const price = document.getElementById('price').value;
+            const heading = document.getElementById('heading').value;
+            const includeIgst = document.getElementById('include-igst').checked;
+
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ price, heading, includeIgst })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').innerHTML = `<p class="text-danger">${data.error}</p>`;
+                } else {
+                    items.push({
+                        description: data['Description'],
+                        price: parseFloat(price),
+                        cgst: data.CGST,
+                        sgst: data.SGST,
+                        igst: data.IGST,
+                        total: data['Total Amount']
+                    });
+
+                    grandTotal += data['Total Amount'];
+
+                    displayItems();
+                    clearFields();
+                    document.getElementById('print-btn').style.display = 'block';
+                    document.getElementById('pay-btn').style.display = 'block'; // Show Pay Now button
+                }
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = `<p class="text-danger">An error occurred: ${error}</p>`;
+            });
+        }
+
+        // Display items in the bill
+        function displayItems() {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = items.map(item => `
+            <p><strong>Description of Goods:</strong> ${item.description}</p>
+            <p><strong>Price:</strong> ₹${item.price.toFixed(2)}</p>
+            <p><strong>CGST(${item.cgst / item.price * 100}%)</strong>: ₹${item.cgst.toFixed(2)}</p>
+            <p><strong>SGST(${item.sgst / item.price * 100}%)</strong>: ₹${item.sgst.toFixed(2)}</p>
+            <p><strong>IGST(${item.igst / item.price * 100}%)</strong>: ₹${item.igst.toFixed(2)}</p>
+            <p><strong>Total GST:</strong> ₹${(item.cgst + item.sgst + item.igst).toFixed(2)}</p>
+            <p><strong>Total:</strong> ₹${item.total.toFixed(2)}</p>
+            <hr>
+        `).join('') + `<h5><strong>GRAND TOTAL:</strong> ₹${grandTotal.toFixed(2)}</h5>`;
+    }
+
+        // Clear form fields
+        function clearFields() {
+            document.getElementById('price').value = '';
+            document.getElementById('heading').value = '';
+            document.getElementById('include-igst').checked = false;
+            document.getElementById('gst-suggestions').innerHTML = '';
+        }
+
+        // Print the bill
+        document.getElementById('print-btn').addEventListener('click', function() {
+            const resultDiv = document.getElementById('result');
+            const printContent = resultDiv.innerHTML;
+            const printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Bill</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        ${printContent}
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        });
+    </script>
+</body>
+</html>

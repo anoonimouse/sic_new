@@ -67,7 +67,6 @@ def generate_qr_code(data):
     return buffer
 
 @app.route('/gst-data', methods=['GET'])
-@app.route('/app1/gst-data', methods=['GET'])
 def get_gst_data():
     """
     Return GST data as JSON
@@ -76,23 +75,18 @@ def get_gst_data():
     return jsonify(data)
 
 @app.route('/')
-@app.route('/app1')
-@app.route('/app1/')
 def landing_page():
     return render_template('landing.html')
 
 @app.route('/finance')
-@app.route('/app1/finance')
 def finance():
     return render_template('finance.html')  
 
 @app.route('/gstworld')
-@app.route('/app1/gstworld')
 def gstworld():
     return render_template('gstworld.html')      
 
 @app.route('/get_stock_data')
-@app.route('/app1/get_stock_data')
 def get_stock_data():
     stock_data = {}
     for stock, url in STOCK_API_URLS.items():
@@ -114,7 +108,6 @@ def get_stock_data():
    
 
 @app.route('/bill-generator')
-@app.route('/app1/bill-generator')
 def bill_generator_page():
     """
     Serve the bill generator page
@@ -122,7 +115,6 @@ def bill_generator_page():
     return render_template('bill_generator.html')
 
 @app.route('/generate_qr')
-@app.route('/app1/generate_qr')
 def generate_qr_page():
     """
     Serve the QR code generator page
@@ -130,8 +122,7 @@ def generate_qr_page():
     return render_template('generate_qr.html')
 
 @app.route('/generate_qr_code', methods=['POST'])
-@app.route('/app1/generate_qr_code', methods=['POST'])
-def generate_qr_code():
+def generate_qr_code_endpoint():
     # Get data from the POST request
     data = request.get_json()
 
@@ -166,7 +157,6 @@ def generate_qr_code():
     return send_file(byte_io, mimetype='image/png')
 
 @app.route('/calculate', methods=['POST'])
-@app.route('/app1/calculate', methods=['POST'])
 def calculate():
     """
     Handle the bill calculation

@@ -13,8 +13,10 @@ google-auth-oauthlib
 pyzbar
 opencv-python
 numpy
+gunicorn
 
 # Notes:
 # - pyzbar needs the zbar shared library installed on the OS (e.g., apt/winget/choco). On Windows, you can install zbar from the OS package manager or use a prebuilt binary.
 # - If you use gspread with a service account the required package is google-auth (already listed).
 # - Pin versions if you need reproducible installs.
+
